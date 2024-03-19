@@ -12,7 +12,6 @@ export interface IUser {
 }
 @Injectable()
 export class UserDomain implements IUser {
-
   private _id: number;
   private _firstName: string;
   private _lastName: string;
@@ -46,7 +45,7 @@ export class UserDomain implements IUser {
   }
 
   async delete(id: number) {
-    return await this.userPort.delete(id);
+    return await this.userPort.deleteUser(id);
   }
 
   async getInstance(where: any) {
@@ -57,6 +56,7 @@ export class UserDomain implements IUser {
       this.lastName = user.lastName;
       this.email = user.email;
       this.isActive = user.isActive;
+      this.passwordEncrypted = user.passwordEncrypted;
       return this;
     }
     return;

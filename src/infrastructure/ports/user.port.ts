@@ -22,11 +22,15 @@ export class UserPort {
     return this.userMapper.toDomain(userAdded);
   }
 
-  async getUser(userId: number) {
+  async getUser(userId: number, where?: any) {
+    if (where) {
+      return await this.userRepository.getInstance().findOneBy(where);
+    }
     return await this.userRepository.getInstance().findOneBy({ id: userId });
   }
 
   async getUserBy(where: any) {
+    // TODO: Delete this method and use only getUser pls
     const userEntity = await this.userRepository
       .getInstance()
       .findOneBy({ ...where });
@@ -40,7 +44,7 @@ export class UserPort {
     });
   }
 
-  async delete(id: number) {
+  async deleteUser(id: number) {
     return await this.userRepository.getInstance().delete(id);
   }
 }

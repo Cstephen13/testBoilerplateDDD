@@ -10,6 +10,7 @@ export class UserMapper implements Mapper<User, IUser> {
       lastName: entity.lastName,
       email: entity.email,
       isActive: entity.isActive,
+      passwordEncrypted: entity.passwordEncrypted,
     } as IUser;
   }
 }

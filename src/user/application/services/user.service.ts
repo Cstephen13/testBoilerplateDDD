@@ -16,13 +16,13 @@ import { UserDto } from '../../presentation/dto/user.dto';
 
 @Injectable()
 export class UserService {
-  SALT_ROUNDS = 12;
   constructor(
     private readonly userDomain: UserDomain,
     private jwtService: JwtService,
     private configService: ConfigService,
   ) {}
-  async return_chains(payload: any) {
+  async getTokens(payload: any) {
+    //TODO: move this to auth
     return {
       accessToken: await this.jwtService.signAsync(payload, {
         expiresIn: this.configService.get<string>('auth.accessTokenExpires'),
@@ -48,7 +48,7 @@ export class UserService {
     } else {
       const passwordEncrypted = await bcrypt.hash(
         createUserDto.password,
-        this.SALT_ROUNDS,
+        parseInt(this.configService.get<string>('auth.saltRounds')),
       );
       const userCreated = await this.userDomain.new({
         ...createUserDto,

@@ -20,22 +20,8 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const [req, res, next] = context.getArgs();
-    console.log('req -------->', req);
-    console.log('res -------->', res);
-    console.log('next -------->', next);
-
-    if (context.getType() === 'http') {
-      console.log('-------->', context.getType());
-      // do something that is only important in the context of regular HTTP requests (REST)
-    } else if (context.getType() === 'rpc') {
-      console.log('-------->', context.getType());
-      // do something that is only important in the context of Microservice requests
-    }
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    console.log('handler -------->', context.getHandler());
-    console.log('getClass -------->', context.getClass());
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),

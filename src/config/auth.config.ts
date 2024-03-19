@@ -11,5 +11,6 @@ export default registerAs<AuthConfig>('auth', () => {
     forgotExpires: process.env.AUTH_FORGOT_TOKEN_EXPIRES_IN,
     confirmEmailSecret: process.env.AUTH_CONFIRM_EMAIL_SECRET,
     confirmEmailExpires: process.env.AUTH_CONFIRM_EMAIL_TOKEN_EXPIRES_IN,
+    saltRounds: process.env.SALT_ROUNDS,
   };
 });
